@@ -13,8 +13,6 @@ public class LevelSelectScreen {
     private Rectangle[] levelButtons;
     private OrthographicCamera camera;
     private BitmapFont font1;
-    private BitmapFont font2;
-    private BitmapFont font3;
 
     public LevelSelectScreen(OrthographicCamera camera) {
         this.camera = camera;
@@ -35,26 +33,18 @@ public class LevelSelectScreen {
 
         font1 = new BitmapFont();
         font1.getData().setScale(1);
-
-        font2 = new BitmapFont();
-        font2.getData().setScale(1);
-
-        font3 = new BitmapFont();
-        font3.getData().setScale(1);
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(backButton, backButtonBounds.x, backButtonBounds.y,
-            backButtonBounds.width, backButtonBounds.height);
+        batch.draw(backButton, backButtonBounds.x, backButtonBounds.y, backButtonBounds.width, backButtonBounds.height);
 
         font1.draw(batch, "Level 1", 175, 290);
-        font2.draw(batch, "Level 2", 375, 90);
-        font3.draw(batch, "Level 3", 570, 290);
+        font1.draw(batch, "Level 2", 375, 90);
+        font1.draw(batch, "Level 3", 570, 290);
 
         for (int i = 0; i < levelButtons.length; i++) {
             Rectangle levelButton = levelButtons[i];
-            batch.draw(levelIcons[i], levelButton.x, levelButton.y,
-                levelButton.width, levelButton.height);
+            batch.draw(levelIcons[i], levelButton.x, levelButton.y, levelButton.width, levelButton.height);
         }
     }
 
