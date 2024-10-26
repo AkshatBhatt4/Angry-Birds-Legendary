@@ -48,7 +48,7 @@ public abstract class Level {
         this.musicToggleBounds = new Rectangle(730, 360, 42, 42);
 
         // Position slingshot
-        this.slingshotBounds = new Rectangle(130, 62, 100, 85);
+        this.slingshotBounds = new Rectangle(130, ground, 100, 85);
         this.winButton = new Texture("win.png"); // Using your win.png
         this.winButtonBounds = new Rectangle(20, 420, 50, 50); // Top left position
         this.hasWon = false;
@@ -70,34 +70,28 @@ public abstract class Level {
         if (!isPaused) {
             renderLevelContent(batch);
 
-            batch.draw(winButton, winButtonBounds.x, winButtonBounds.y,
-                winButtonBounds.width, winButtonBounds.height);
+            batch.draw(winButton, winButtonBounds.x, winButtonBounds.y, winButtonBounds.width, winButtonBounds.height);
 
-            batch.draw(looseButton, looseButtonBounds.x, looseButtonBounds.y,
-                looseButtonBounds.width, looseButtonBounds.height);
+            batch.draw(looseButton, looseButtonBounds.x, looseButtonBounds.y, looseButtonBounds.width, looseButtonBounds.height);
         }
 
         // Always draw the slingshot, regardless of pause state
-        batch.draw(slingshot, slingshotBounds.x, slingshotBounds.y,
-            slingshotBounds.width, slingshotBounds.height);
+        batch.draw(slingshot, slingshotBounds.x, slingshotBounds.y, slingshotBounds.width, slingshotBounds.height);
 
         // Draw pause/play button based on current state
         if (isPaused) {
             // Draw play button when paused
-            batch.draw(playButton, pauseButtonBounds.x, pauseButtonBounds.y,
-                pauseButtonBounds.width, pauseButtonBounds.height);
+            batch.draw(playButton, pauseButtonBounds.x, pauseButtonBounds.y, pauseButtonBounds.width, pauseButtonBounds.height);
 
             // Draw menu items
-            batch.draw(quitButton, quitButtonBounds.x, quitButtonBounds.y,
-                quitButtonBounds.width, quitButtonBounds.height);
+            batch.draw(quitButton, quitButtonBounds.x, quitButtonBounds.y, quitButtonBounds.width, quitButtonBounds.height);
 
-            batch.draw(isMusicOn ? musicOn : musicOff,
-                musicToggleBounds.x, musicToggleBounds.y,
-                musicToggleBounds.width, musicToggleBounds.height);
-        } else {
+            batch.draw(isMusicOn ? musicOn : musicOff, musicToggleBounds.x, musicToggleBounds.y, musicToggleBounds.width, musicToggleBounds.height);
+        }
+        else {
             // Draw pause button when playing
             batch.draw(pauseButton, pauseButtonBounds.x, pauseButtonBounds.y,
-                pauseButtonBounds.width, pauseButtonBounds.height);
+                    pauseButtonBounds.width, pauseButtonBounds.height);
         }
     }
 
