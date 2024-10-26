@@ -48,7 +48,7 @@ public abstract class Level {
         this.musicToggleBounds = new Rectangle(730, 360, 42, 42);
 
         // Position slingshot
-        this.slingshotBounds = new Rectangle(130, 62, 80, 65);
+        this.slingshotBounds = new Rectangle(130, 62, 100, 85);
         this.winButton = new Texture("win.png"); // Using your win.png
         this.winButtonBounds = new Rectangle(20, 420, 50, 50); // Top left position
         this.hasWon = false;
