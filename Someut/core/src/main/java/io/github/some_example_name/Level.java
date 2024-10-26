@@ -27,6 +27,8 @@ public abstract class Level {
     protected Texture looseButton;
     protected Rectangle looseButtonBounds;
     protected boolean haslost;
+    public int ground=65;
+    public float tower1X = 550;
 
     public Level(OrthographicCamera camera, String backgroundPath) {
         this.camera = camera;
