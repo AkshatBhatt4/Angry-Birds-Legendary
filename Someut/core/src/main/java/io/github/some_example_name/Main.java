@@ -83,11 +83,14 @@ public class Main extends ApplicationAdapter {
                     // Check for victory condition
                     if (currentLevel.hasWon()) {
                         currentState = GameState.VICTORY;
+                        victoryScreen.setCurrentLevel(currentLevel.getLevelNumber()); // Add this line
                     }
 
                     if (currentLevel.haslost()) {
                         currentState = GameState.LOSE;
+                        looseScreen.setCurrentLevel(currentLevel.getLevelNumber()); // Add this line
                     }
+
                     // Check if we should return to level select
                     if (currentLevel.shouldReturnToLevelSelect()) {
                         currentState = GameState.LEVEL_SELECT;
@@ -130,10 +133,30 @@ public class Main extends ApplicationAdapter {
                         }
                     }
                     break;
+
                 case VICTORY:
+
+                    if (victoryScreen.isBackButtonPressed(touchPos.x, touchPos.y)) {
+                        currentState = GameState.LEVEL_SELECT;
+                    } else if (victoryScreen.isReplayButtonPressed(touchPos.x, touchPos.y)) {
+                        // Reload the current level
+                        loadLevel(victoryScreen.getCurrentLevel());
+                        currentState = GameState.PLAYING_LEVEL;
+                    } else if (victoryScreen.isNextButtonPressed(touchPos.x, touchPos.y)) {
+                        // Load next level
+                        loadLevel(victoryScreen.getNextLevel());
+                        currentState = GameState.PLAYING_LEVEL;
+                    }
                     break;
 
                 case LOSE:
+                    if (looseScreen.isBackButtonPressed(touchPos.x, touchPos.y)) {
+                        currentState = GameState.LEVEL_SELECT;
+                    } else if (looseScreen.isReplayButtonPressed(touchPos.x, touchPos.y)) {
+                        // Reload the current level
+                        loadLevel(looseScreen.getCurrentLevel());
+                        currentState = GameState.PLAYING_LEVEL;
+                    }
                     break;
             }
         }

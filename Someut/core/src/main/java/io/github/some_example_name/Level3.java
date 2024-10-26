@@ -14,7 +14,7 @@ public class Level3 extends Level {
     private Array<GameCharacter> availableBirds;
 
     public Level3(OrthographicCamera camera) {
-        super(camera, "level1_bg.jpg");
+        super(camera, "level1_bg.jpg" ,3);
 
         // Initialize texture manager with sprite sheet
         textureManager = new TextureManager();

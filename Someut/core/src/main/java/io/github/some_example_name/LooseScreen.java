@@ -12,15 +12,28 @@ public class LooseScreen {
     protected Rectangle nostar3Bounds;
     protected Texture gover;
     protected Rectangle goverBounds;
+    private Texture backButton;
+    private Rectangle backButtonBounds;
+    private Texture replayButton;
+    private Rectangle replayButtonBounds;
+    private int currentLevel;
 
     public LooseScreen() {
         background = new Texture("victory_bg.jpg");
         this.nostar1 = new Texture("no_star.png");
         this.gover = new Texture("over.png");
+        this.replayButton = new Texture("replay.png");
         this.nostar1Bounds = new Rectangle(230, 240, 90, 80);
         this.nostar2Bounds = new Rectangle(350, 240, 90, 80);
         this.nostar3Bounds = new Rectangle(470, 240, 90, 80);
+
+        this.replayButtonBounds = new Rectangle(430, 65, 65, 60);
         this.goverBounds = new Rectangle(305, 330, 170, 130);
+
+        this.backButton = new Texture("home_page.png");
+        // Positioning the back button at the bottom center of the screen
+        this.backButtonBounds = new Rectangle(285, 60, 80, 70); // Adjust position and size as needed
+
     }
 
     public void render(SpriteBatch batch) {
@@ -33,6 +46,26 @@ public class LooseScreen {
             nostar3Bounds.width, nostar3Bounds.height);
         batch.draw(gover, goverBounds.x, goverBounds.y,
             goverBounds.width, goverBounds.height);
+        batch.draw(backButton, backButtonBounds.x, backButtonBounds.y,
+            backButtonBounds.width, backButtonBounds.height);
+        batch.draw(replayButton, replayButtonBounds.x, replayButtonBounds.y,
+            replayButtonBounds.width, replayButtonBounds.height);
+    }
+
+    public boolean isBackButtonPressed(float x, float y) {
+        return backButtonBounds.contains(x, y);
+    }
+
+    public boolean isReplayButtonPressed(float x, float y) {
+        return replayButtonBounds.contains(x, y);
+    }
+
+    public void setCurrentLevel(int level) {
+        this.currentLevel = level;
+    }
+
+    public int getCurrentLevel() {
+        return this.currentLevel;
     }
 }
 

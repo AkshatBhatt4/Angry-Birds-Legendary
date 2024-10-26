@@ -10,6 +10,7 @@ public abstract class Level {
     protected Texture pauseButton;
     protected Texture playButton;
     protected Texture quitButton;
+    protected int levelNumber;
     protected Texture musicOn;
     protected Texture musicOff;
     protected Texture slingshot;
@@ -30,7 +31,7 @@ public abstract class Level {
     public int ground=65;
     public float tower1X = 550;
 
-    public Level(OrthographicCamera camera, String backgroundPath) {
+    public Level(OrthographicCamera camera, String backgroundPath , int levelNumber) {
         this.camera = camera;
         this.background = new Texture(backgroundPath);
         this.pauseButton = new Texture("pause_button.png");
@@ -39,6 +40,7 @@ public abstract class Level {
         this.musicOn = new Texture("music_on2.png");
         this.musicOff = new Texture("music_off2.png");
         this.slingshot = new Texture("slingshot.png");
+        this.levelNumber = levelNumber;
 
         // Position pause/play button in top right corner
         this.pauseButtonBounds = new Rectangle(730, 420, 50, 50);
@@ -91,8 +93,12 @@ public abstract class Level {
         else {
             // Draw pause button when playing
             batch.draw(pauseButton, pauseButtonBounds.x, pauseButtonBounds.y,
-                    pauseButtonBounds.width, pauseButtonBounds.height);
+                pauseButtonBounds.width, pauseButtonBounds.height);
         }
+    }
+
+    public int getLevelNumber() {
+        return levelNumber;
     }
 
     public void handleInput(float touchX, float touchY) {
