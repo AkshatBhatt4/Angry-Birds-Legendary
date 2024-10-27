@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class LevelSelectScreen {
     private Texture backButton;
+    private Texture LoadButton;
     private Texture[] levelIcons;
     private Rectangle backButtonBounds;
+    private Rectangle LoadButtonBounds;
     private Rectangle[] levelButtons;
     private OrthographicCamera camera;
     private BitmapFont font1;
@@ -18,6 +20,7 @@ public class LevelSelectScreen {
         this.camera = camera;
 
         backButton = new Texture("back_button.png");
+        LoadButton = new Texture("LoadButton.png");
 
         levelIcons = new Texture[3];
         levelIcons[0] = new Texture("level_3.png");
@@ -25,6 +28,7 @@ public class LevelSelectScreen {
         levelIcons[2] = new Texture("level_1.png");
 
         backButtonBounds = new Rectangle(10, 410, 60, 55);
+        LoadButtonBounds = new Rectangle(700, 30, 50, 50);
 
         levelButtons = new Rectangle[3];
         levelButtons[0] = new Rectangle(155, 300, 85, 70);
@@ -37,6 +41,7 @@ public class LevelSelectScreen {
 
     public void render(SpriteBatch batch) {
         batch.draw(backButton, backButtonBounds.x, backButtonBounds.y, backButtonBounds.width, backButtonBounds.height);
+        batch.draw(LoadButton, LoadButtonBounds.x, LoadButtonBounds.y, LoadButtonBounds.width, LoadButtonBounds.height);
 
         font1.draw(batch, "Level 1", 175, 290);
         font1.draw(batch, "Level 2", 375, 90);
