@@ -23,6 +23,8 @@ public abstract class Level {
     protected boolean shouldReturnToLevelSelect;
     protected boolean musicStateChanged;
     protected Texture winButton;
+    protected Texture saveButton;
+    protected Rectangle saveButtonBounds;
     protected Rectangle winButtonBounds;
     protected boolean hasWon;
     protected Texture looseButton;
@@ -40,6 +42,7 @@ public abstract class Level {
         this.musicOn = new Texture("music_on2.png");
         this.musicOff = new Texture("music_off2.png");
         this.slingshot = new Texture("slingshot.png");
+        this.saveButton = new Texture("SaveButton.png");
         this.levelNumber = levelNumber;
 
         // Position pause/play button in top right corner
@@ -54,6 +57,7 @@ public abstract class Level {
         this.winButton = new Texture("win.png"); // Using your win.png
         this.winButtonBounds = new Rectangle(20, 420, 50, 50); // Top left position
         this.hasWon = false;
+        this.saveButtonBounds = new Rectangle(160, 420, 50, 50);
 
         this.looseButton = new Texture("lose.png"); // Using your win.png
         this.looseButtonBounds = new Rectangle(90, 420, 50, 50); // Top left position
@@ -73,7 +77,7 @@ public abstract class Level {
             renderLevelContent(batch);
 
             batch.draw(winButton, winButtonBounds.x, winButtonBounds.y, winButtonBounds.width, winButtonBounds.height);
-
+            batch.draw(saveButton, saveButtonBounds.x, saveButtonBounds.y, saveButtonBounds.width, saveButtonBounds.height);
             batch.draw(looseButton, looseButtonBounds.x, looseButtonBounds.y, looseButtonBounds.width, looseButtonBounds.height);
         }
 
