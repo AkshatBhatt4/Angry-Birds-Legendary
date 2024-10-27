@@ -14,10 +14,10 @@ This project uses [Gradle](https://gradle.org/) to manage dependencies.
 The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
 
 ## Steps to Setup and run the project:
-    1. Download and extract all the files. And open them in Idea IDE.
+    1. Download and extract all the files. And open them in Idea IDE(supporting LibGDX library).
     2. Let all the files be loaded.
     3. Open the gradle tab from the left taskbar.
-    4. Click on 'Tasks' then 'Application' then 'run' to reun the program.
+    4. Click on 'Tasks' then 'Application' then 'run' to run the program.
 
 ## Structure
 The project contains the following Java files:
@@ -44,37 +44,21 @@ The project contains the following Java files:
 - `WoodStructure.java`
 
 ## Steps to test/use the Program:
-1. You need to select whether you want to enter the interface or quit it.
-2. You need to select your User type.
-3. At every single step you will have an option to go back to either the previous menu or logout to the main menu.
-4. You will have to Log in/Signup (Admin username-admin password-admin@123) You can also use pre-fed profiles of student/professor.
-5. If you choose to signup (only for student and professor) you will have to log in again using those credentials.
-6. At log in you will be authenticated and then brought to the menu of the respected user.
-    - For Administrator: the menu allows him to:
-        - Manage Course Catalog
-        - Manage Student Records
-        - Assign Professors to Courses
-        - Handle Complaints
-        - View Profile and
-        - edit profile.
-    - For Professor: the menu allows him to:
-        - Manage Courses
-        - View Enrolled Students
-        - View Profile and
-        - edit profile.
-    - For Student: the menu allows him to:
-        - View Available Courses
-        - Register for Courses
-        - View Schedule
-        - Track Academic Progress
-        - Drop Courses
-        - Submit Complaint
-        - View Complaint Status
-        - View Profile and
-        - edit profile.
-7. A student can write complaints to admin and view status. Admin can also view the complaints sorted by status and after reading have the option to change the status of the complaint.
-8. The program will save the data as long as the user stays in the interface and the data changes will be also reflected and after exiting the interface the program will terminate and so wil the data .
-9. Even though error handling has been implemented in most of the inputs it is suggested that the user stays careful of the input.
+1. The Program starts on the main screen.
+2. It has a button to toggle music.(On by default every time you run.)
+3. It has a start game button which takes you to the Level select page.
+4. The Level select page has 3 levels(1-3) all unlocked for now(the level might change in the final app)
+5. It also has a load button for loading previously  saved games.(Not functional right now )
+6. Every level has birds on the left and pigs and structures on the right.
+7. Save button to save the current state of the game and resume later.(not functional right now.)
+8. pause  button on the top left
+9. pause button has 3 options
+   1. Resume
+   2. Music Toggle
+   3. Return to Level Select Screen
+10. Just to showcase the Win and lose screens. Buttons to show the screens have been instantiated in each level for now.
+11. Upon losing, you can either retry or return to the main menu.
+12. Upon winning apart from retrying and returning to the main menu, You can also directly move to the next level.(If it exists)
 
 ## Sources
 1. [Angry Birds Fandom](https://angrybirds.fandom.com/wiki/Angry_Birds_Wiki)
