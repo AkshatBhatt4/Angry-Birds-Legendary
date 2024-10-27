@@ -86,38 +86,4 @@ public class Level2 extends Level {
         super.dispose();
         textureManager.dispose();
     }
-
-    // Method to handle bird launching
-    /*public void launchBird(float velocityX, float velocityY) {
-        if (activeBird != null) {
-
-        }
-    }
-
-    // Method to select next bird
-    private void selectNextBird() {
-        if (availableBirds.size > 0) {
-            activeBird = (RedBird) availableBirds.first();
-            availableBirds.removeIndex(0);
-        } else {
-            activeBird = null;
-            // Could trigger level completion check here
-        }
-    }
-
-    // Method to check for collisions (to be implemented)
-    private void checkCollisions() {
-        // Implementation for collision detection between birds, structures, and pigs would go here
-    }
-
-    // Method to update level state (to be implemented)
-    public void update(float delta) {
-        if (!isPaused) {
-            // Update physics, check collisions, etc.
-            checkCollisions();
-
-            // Check for destroyed structures and pigs
-            // Update score and level status
-        }
-    }*/
 }
