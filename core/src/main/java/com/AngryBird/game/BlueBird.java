@@ -24,7 +24,8 @@ public class BlueBird extends GameCharacter {
     private boolean isReadyForReuse = false;
     private Vector2 slingshotPosition;
     private float maxDragDistance = 1.0f;
-    private float launchMultiplier = 1.8f;
+    private float launchMultiplier = 0.8f;
+    private int damage = 1;
 
     private ShapeRenderer trajectoryRenderer;
     private Vector2 initialPosition;
@@ -37,8 +38,11 @@ public class BlueBird extends GameCharacter {
         initialPosition = new Vector2(x / Structure.PhysicsConstants.PIXELS_TO_METERS,
             y / Structure.PhysicsConstants.PIXELS_TO_METERS);
 
-        slingshotPosition = new Vector2(1.3f, 0.65f);
+        slingshotPosition = new Vector2(2f, 0.9f);
         initializePhysicsBody(initialPosition);
+
+
+        physicsBody.setUserData(this);
 
         createGround();
 
@@ -101,9 +105,9 @@ public class BlueBird extends GameCharacter {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.4f;
+        fixtureDef.density = 0.8f;
         fixtureDef.friction = 0.3f;
-        fixtureDef.restitution = 0.4f;
+        fixtureDef.restitution = 0.2f;
 
         physicsBody.createFixture(fixtureDef);
         shape.dispose();
@@ -190,6 +194,10 @@ public class BlueBird extends GameCharacter {
             renderTrajectory(camera);
         }
     }
+    public void markForRemoval() {
+        isReadyForReuse = true;
+    }
+
 
     private void renderTrajectory(Camera camera) {
         trajectoryRenderer.setProjectionMatrix(camera.combined);
@@ -217,9 +225,6 @@ public class BlueBird extends GameCharacter {
         trajectoryRenderer.end();
     }
 
-    public void dispose() {
-        trajectoryRenderer.dispose();
-    }
 
     public boolean isLaunched() {
         return isLaunched;
@@ -228,4 +233,16 @@ public class BlueBird extends GameCharacter {
     public Body getPhysicsBody() {
         return physicsBody;
     }
+
+    public void dispose() {
+        if (physicsBody != null && gameWorld != null) {
+            gameWorld.destroyBody(physicsBody);
+            physicsBody = null; // Prevent further interactions
+        }
+        if (trajectoryRenderer != null) {
+            trajectoryRenderer.dispose();
+            trajectoryRenderer = null; // Ensure it's not disposed again
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -13,6 +14,8 @@ public class Level2 extends Level {
     private Array<GameCharacter> characters;
     private BlueBird activeBird;
     private Array<BlueBird> availableBirds;
+    private Array<Body> bodiesToRemove = new Array<>();
+    private Array<Body> bodiesMarkedForRemoval = new Array<>();
 
     // Box2D World
     private World physicsWorld;
@@ -22,6 +25,7 @@ public class Level2 extends Level {
 
         // Initialize Box2D World with gravity
         physicsWorld = new World(new Vector2(0, -9.8f), true);
+        physicsWorld.setContactListener(new CollisionHandler());
 
         // Initialize texture manager with sprite sheet
         textureManager = new TextureManager();
@@ -130,21 +134,6 @@ public class Level2 extends Level {
             textureManager.getBlueBirdRegion()
         ));
     }
-//
-//    public void reset() {
-//        // Dispose of any existing physics body
-//        if (physicsBody != null) {
-//            gameWorld.destroyBody(physicsBody);
-//        }
-//
-//        // Reinitialize the physics body with the bird's original position
-//        initializePhysicsBody(initialPosition);
-//
-//        // Reset flags
-//        isBeingDragged = false;
-//        isLaunched = false;
-//        isReadyForReuse = false;
-//    }
 
 
     @Override
@@ -184,10 +173,49 @@ public class Level2 extends Level {
             }
         }
 
+        for (int i = structures.size - 1; i >= 0; i--) {
+            Structure structure = structures.get(i);
+            if (structure.isMarkedForRemoval()) {
+                bodiesToRemove.add(structure.getPhysicsBody());
+                structures.removeIndex(i);
+                structure.dispose();
+            } else {
+                structure.render(batch);
+            }
+        }
+
+        // Draw characters (pigs)
+        for (int i = characters.size - 1; i >= 0; i--) {
+            GameCharacter character = characters.get(i);
+            if (character instanceof ArmoredPig) {
+                ArmoredPig pig = (ArmoredPig) character;
+                if (pig.isMarkedForRemoval()) {
+                    bodiesToRemove.add(pig.getPhysicsBody());
+                    characters.removeIndex(i);
+                    pig.dispose();
+                } else {
+                    pig.render(batch);
+                }
+            }
+        }
+
+        if(characters.isEmpty()) hasWon=true;
+
+        for (BlueBird bird : availableBirds) {
+            bird.render(batch);
+        }
+
+        // Destroy bodies after simulation step
+        for (Body body : bodiesToRemove) {
+            physicsWorld.destroyBody(body);
+        }
+        bodiesToRemove.clear();
+
         // Draw available birds
         for (BlueBird bird : availableBirds) {
             bird.render(batch);
         }
+        if(activeBird==null) haslost=true;
     }
 
 

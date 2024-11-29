@@ -24,7 +24,8 @@ public class BlackBird extends GameCharacter {
     private boolean isReadyForReuse = false;
     private Vector2 slingshotPosition;
     private float maxDragDistance = 1.0f;
-    private float launchMultiplier = 2.5f;  // Black bird has higher launch multiplier
+    private float launchMultiplier = 2.5f;
+    private int damage = 1;// Black bird has higher launch multiplier
 
     private ShapeRenderer trajectoryRenderer;
     private Vector2 initialPosition;
@@ -37,8 +38,10 @@ public class BlackBird extends GameCharacter {
         initialPosition = new Vector2(x / Structure.PhysicsConstants.PIXELS_TO_METERS,
             y / Structure.PhysicsConstants.PIXELS_TO_METERS);
 
-        slingshotPosition = new Vector2(1.3f, 0.65f);
+        slingshotPosition = new Vector2(1.6f, 1.15f);
         initializePhysicsBody(initialPosition);
+
+        physicsBody.setUserData(this);
 
         createGround();
 
@@ -152,6 +155,10 @@ public class BlackBird extends GameCharacter {
             isBeingDragged = false;
             isLaunched = true;
         }
+    }
+
+    public void markForRemoval() {
+        isReadyForReuse = true;
     }
 
     private void launchBird() {

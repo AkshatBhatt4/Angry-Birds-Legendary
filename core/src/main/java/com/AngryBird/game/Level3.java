@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +16,8 @@ public class Level3 extends Level {
     private BlackBird activeBird;
     //private Array<GameCharacter> availableBirds;
     private Array<BlackBird> availableBirds;
+    private Array<Body> bodiesToRemove = new Array<>();
+    private Array<Body> bodiesMarkedForRemoval = new Array<>();
 
     // Box2D World
     private World physicsWorld;
@@ -24,6 +27,7 @@ public class Level3 extends Level {
 
         // Initialize Box2D World with gravity
         physicsWorld = new World(new Vector2(0, -9.8f), true);
+        physicsWorld.setContactListener(new CollisionHandler());
 
         // Initialize texture manager with sprite sheet
         textureManager = new TextureManager();
@@ -110,31 +114,6 @@ public class Level3 extends Level {
             140,
             textureManager.getStoneRegion()
         ));
-//        structures.add(new StoneStructure(
-//            physicsWorld,
-//            tower3X-40,
-//            ground,
-//            20,
-//            140,
-//            textureManager.getStoneRegion()
-//        ));
-
-//        structures.add(new GlassStructure(
-//            physicsWorld,
-//            tower3X - 50,
-//            ground + 160,
-//            20,
-//            100,
-//            textureManager.getGlassRegion()
-//        ));
-//        structures.add(new GlassStructure(
-//            physicsWorld,
-//            tower3X + 50,
-//            ground + 160,
-//            20,
-//            100,
-//            textureManager.getGlassRegion()
-//        ));
 
         // Horizontal platforms
         structures.add(new WoodStructure(
@@ -162,14 +141,6 @@ public class Level3 extends Level {
             20,
             textureManager.getStoneRegion()
         ));
-//        structures.add(new GlassStructure(
-//            physicsWorld,
-//            tower3X - 50,
-//            ground + 260,
-//            120,
-//            20,
-//            textureManager.getGlassRegion()
-//        ));
     }
 
     private void createPigs() {
@@ -222,6 +193,85 @@ public class Level3 extends Level {
     }
 
     @Override
+//    protected void renderLevelContent(SpriteBatch batch) {
+//        // Update physics world
+//        physicsWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
+//
+//        // Draw background
+//        batch.draw(background, 0, 0, 800, 480);
+//
+//        // Manage active bird
+//        if (activeBird != null) {
+//            activeBird.update(camera);
+//            activeBird.render(batch);
+//
+//            // Check if bird is out of play
+//            if (activeBird.isLaunched() && activeBird.isOutOfPlay()) {
+//                // Dispose of the current bird
+//                activeBird.dispose();
+//
+//                // Get the next bird from the queue if available
+//                if (!availableBirds.isEmpty()) {
+//                    activeBird = availableBirds.removeIndex(0);
+//                } else {
+//                    activeBird = null; // No more birds
+//                }
+//            }
+//        }
+//
+//        for (int i = structures.size - 1; i >= 0; i--) {
+//            Structure structure = structures.get(i);
+//            if (structure.isMarkedForRemoval()) {
+//                bodiesToRemove.add(structure.getPhysicsBody());
+//                structures.removeIndex(i);
+//                structure.dispose();
+//            } else {
+//                structure.render(batch);
+//            }
+//        }
+//
+//        // Draw characters (pigs)
+//        for (int i = characters.size - 1; i >= 0; i--) {
+//            GameCharacter character = characters.get(i);
+//            if (character instanceof BasicPig) {
+//                BasicPig pig = (BasicPig) character;
+//                if (pig.isMarkedForRemoval()) {
+//                    bodiesToRemove.add(pig.getPhysicsBody());
+//                    characters.removeIndex(i);
+//                    pig.dispose();
+//                } else {
+//                    pig.render(batch);
+//                }
+//            }
+//            if (character instanceof KingPig) {
+//                KingPig pig = (KingPig) character;
+//                if (pig.isMarkedForRemoval()) {
+//                    bodiesToRemove.add(pig.getPhysicsBody());
+//                    characters.removeIndex(i);
+//                    pig.dispose();
+//                } else {
+//                    pig.render(batch);
+//                }
+//
+//                if (characters.isEmpty()) hasWon = true;
+//
+//                // Destroy bodies after simulation step
+//                for (Body body : bodiesToRemove) {
+//                    physicsWorld.destroyBody(body);
+//                }
+//                bodiesToRemove.clear();
+//
+//                // Draw structures
+//                for (Structure structure : structures) {
+//                    structure.render(batch);
+//                }
+//                for (BlackBird bird : availableBirds) {
+//                    bird.render(batch);
+//                }
+//            }
+//        }
+//
+//    }
     protected void renderLevelContent(SpriteBatch batch) {
         // Update physics world
         physicsWorld.step(Gdx.graphics.getDeltaTime(), 6, 2);
@@ -248,35 +298,57 @@ public class Level3 extends Level {
             }
         }
 
-        // Draw structures
-        for (Structure structure : structures) {
-            structure.render(batch);
+        // Remove structures
+        for (int i = structures.size - 1; i >= 0; i--) {
+            Structure structure = structures.get(i);
+            if (structure.isMarkedForRemoval()) {
+                bodiesToRemove.add(structure.getPhysicsBody());
+                structures.removeIndex(i);
+                structure.dispose();
+            } else {
+                structure.render(batch);
+            }
         }
 
-        // Draw characters (pigs)
-        for (GameCharacter character : characters) {
-            character.render(batch);
+        // Remove characters (pigs)
+        for (int i = characters.size - 1; i >= 0; i--) {
+            GameCharacter character = characters.get(i);
+            if (character instanceof BasicPig) {
+                BasicPig pig = (BasicPig) character;
+                if (pig.isMarkedForRemoval()) {
+                    bodiesToRemove.add(pig.getPhysicsBody());
+                    characters.removeIndex(i);
+                    pig.dispose();
+                } else {
+                    pig.render(batch);
+                }
+            }
+            if (character instanceof KingPig) {
+                KingPig pig = (KingPig) character;
+                if (pig.isMarkedForRemoval()) {
+                    bodiesToRemove.add(pig.getPhysicsBody());
+                    characters.removeIndex(i);
+                    pig.dispose();
+                } else {
+                    pig.render(batch);
+                }
+            }
         }
+
+        // Check if level is won
+        if (characters.isEmpty()) {
+            hasWon = true;
+        }
+
+        // Destroy bodies after simulation step
+        for (Body body : bodiesToRemove) {
+            physicsWorld.destroyBody(body);
+        }
+        bodiesToRemove.clear();
 
         // Draw available birds
         for (BlackBird bird : availableBirds) {
             bird.render(batch);
         }
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        textureManager.dispose();
-        physicsWorld.dispose();
-
-        // Dispose of birds
-        if (activeBird != null) {
-            activeBird.dispose();
-        }
-        for (BlackBird bird : availableBirds) {
-            bird.dispose();
-        }
-    }
-
 }

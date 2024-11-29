@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 // Concrete implementation for Stone Structures
 public class StoneStructure extends Structure {
+    private boolean markedForRemoval = false;
+
     public StoneStructure(World world, float x, float y, float width, float height, TextureRegion texture) {
         super(world, x, y, width, height, 80f, texture);
     }
@@ -22,6 +24,15 @@ public class StoneStructure extends Structure {
 
     @Override
     protected float getRestitution() {
-        return 0.0f; 
+        return 0.0f;
     }
+
+    public void markForRemoval() {
+        markedForRemoval = true;
+    }
+
+    public boolean isMarkedForRemoval() {
+        return markedForRemoval;
+    }
+
 }

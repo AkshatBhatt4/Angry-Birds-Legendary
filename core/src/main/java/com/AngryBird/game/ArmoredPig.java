@@ -8,13 +8,29 @@ public class ArmoredPig extends GameCharacter {
     // Physics body
     private Body physicsBody;
     private World gameWorld;
+    private int health = 1;
+    private boolean markedForRemoval = false;
 
     public ArmoredPig(World world, float x, float y, TextureRegion region) {
         super(x, y, 55, 55);
         this.gameWorld = world;
         this.currentFrame = region;
+        this.health = 1;
 
         initializePhysicsBody(x, y);
+        physicsBody.setUserData(this);
+    }
+
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            markedForRemoval = true; // Mark for removal instead of directly disposing
+        }
+    }
+
+
+    public boolean isMarkedForRemoval() {
+        return markedForRemoval;
     }
 
     private void initializePhysicsBody(float x, float y) {

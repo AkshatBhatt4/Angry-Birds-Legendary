@@ -8,13 +8,17 @@ public class KingPig extends GameCharacter {
     // Physics body
     private Body physicsBody;
     private World gameWorld;
+    private int health = 1;
+    private boolean markedForRemoval = false;
 
     public KingPig(World world, float x, float y, TextureRegion region) {
         super(x, y, 75, 92);
         this.gameWorld = world;
         this.currentFrame = region;
+        this.health = 1;
 
         initializePhysicsBody(x, y);
+        physicsBody.setUserData(this);
     }
 
     private void initializePhysicsBody(float x, float y) {
@@ -52,6 +56,10 @@ public class KingPig extends GameCharacter {
         shape.dispose();
     }
 
+    public boolean isMarkedForRemoval() {
+        return markedForRemoval;
+    }
+
     @Override
     public void render(SpriteBatch batch) {
         // Update position based on physics body
@@ -65,6 +73,13 @@ public class KingPig extends GameCharacter {
             bounds.width,
             bounds.height
         );
+    }
+
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            markedForRemoval = true; // Mark for removal instead of directly disposing
+        }
     }
 
     public Body getPhysicsBody() {
