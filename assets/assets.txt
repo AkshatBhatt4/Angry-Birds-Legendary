@@ -7,6 +7,8 @@ Blocks2.png
 gold_win.png
 home_page.png
 Home_page_dark.png
+hs_err_pid10788.log
+hs_err_pid12260.log
 level1_bg.jpg
 level2_bg.jpg
 level3_bg.jpg
@@ -14,6 +16,7 @@ level_1.png
 level_2.png
 level_3.png
 libgdx.png
+LoadButton.png
 lose.png
 music.mp3
 music_off.png
@@ -29,7 +32,15 @@ play_button.png
 play_button2.png
 quit_button.png
 replay.png
+SaveButton.png
 slingshot.png
 star.png
+ui/font-list.fnt
+ui/font-subtitle.fnt
+ui/font-window.fnt
+ui/font.fnt
+ui/uiskin.atlas
+ui/uiskin.json
+ui/uiskin.png
 victory_bg.jpg
 win.png
