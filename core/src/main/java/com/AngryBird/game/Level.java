@@ -22,13 +22,13 @@ public abstract class Level {
     protected boolean isPaused;
     protected boolean shouldReturnToLevelSelect;
     protected boolean musicStateChanged;
-    protected Texture winButton;
     protected Texture saveButton;
     protected Rectangle saveButtonBounds;
-    protected Rectangle winButtonBounds;
+//    protected Texture winButton;
+//    protected Rectangle winButtonBounds;
+//    protected Texture looseButton;
+//    protected Rectangle looseButtonBounds;
     protected boolean hasWon;
-    protected Texture looseButton;
-    protected Rectangle looseButtonBounds;
     protected boolean hasLost;
     public int ground=65;
     public float tower1X = 550;
