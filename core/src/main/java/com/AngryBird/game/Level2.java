@@ -178,7 +178,6 @@ public class Level2 extends Level {
             if (structure.isMarkedForRemoval()) {
                 bodiesToRemove.add(structure.getPhysicsBody());
                 structures.removeIndex(i);
-                structure.dispose();
             } else {
                 structure.render(batch);
             }
@@ -199,7 +198,17 @@ public class Level2 extends Level {
             }
         }
 
-        if(characters.isEmpty()) hasWon=true;
+        if (characters.isEmpty() && endScreenTimer == -1) {
+            endScreenTimer = 0; // Start the timer
+        }
+
+        if (endScreenTimer >= 0) {
+            endScreenTimer += Gdx.graphics.getDeltaTime();
+            if (endScreenTimer >= END_SCREEN_DELAY) {
+                hasWon =true;
+                endScreenTimer = -1; // Reset the timer
+            }
+        }
 
         for (BlueBird bird : availableBirds) {
             bird.render(batch);
@@ -215,7 +224,17 @@ public class Level2 extends Level {
         for (BlueBird bird : availableBirds) {
             bird.render(batch);
         }
-        if(activeBird==null) haslost=true;
+        if (activeBird == null && endScreenTimer == -1) {
+            endScreenTimer = 0; // Start the timer
+        }
+
+        if (endScreenTimer >= 0) {
+            endScreenTimer += Gdx.graphics.getDeltaTime();
+            if (endScreenTimer >= END_SCREEN_DELAY) {
+                hasLost =true;
+                endScreenTimer = -1; // Reset the timer
+            }
+        }
     }
 
 
