@@ -219,6 +219,7 @@ public class Level1 extends Level {
                 }
             }
         }
+        if(characters.isEmpty()) hasWon=true;
 
         for (int i = structures.size - 1; i >= 0; i--) {
             Structure structure = structures.get(i);
@@ -254,6 +255,7 @@ public class Level1 extends Level {
         if (activeBird != null) {
             activeBird.update(camera);
         }
+        if(activeBird==null) haslost=true;
     }
 
     @Override
