@@ -4,7 +4,6 @@ import com.AngryBird.game.Structure;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 
-// Concrete implementation for Stone Structures
 public class StoneStructure extends Structure {
     private boolean markedForRemoval = false;
 

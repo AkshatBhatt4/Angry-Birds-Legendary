@@ -24,6 +24,7 @@ public abstract class Level {
     protected boolean musicStateChanged;
     protected Texture saveButton;
     protected Rectangle saveButtonBounds;
+    protected int savedLevelNumber=-1;
 //    protected Texture winButton;
 //    protected Rectangle winButtonBounds;
 //    protected Texture looseButton;
@@ -67,6 +68,10 @@ public abstract class Level {
         this.musicStateChanged = false;
     }
 
+    public int getSavedLevelNumber(){
+        return savedLevelNumber;
+    }
+
     public void render(SpriteBatch batch, boolean isMusicOn) {
         batch.draw(background, 0, 0, 800, 480);
         if (!isPaused) {
@@ -101,6 +106,9 @@ public abstract class Level {
             } else if (musicToggleBounds.contains(touchX, touchY)) {
                 musicStateChanged = true;
             }
+        }
+        else if(saveButtonBounds.contains(touchX, touchY)) {
+            savedLevelNumber=levelNumber;
         }
 //        else if (winButtonBounds.contains(touchX, touchY)) {
 //            hasWon = true;

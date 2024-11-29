@@ -86,7 +86,7 @@ public class Main extends ApplicationAdapter {
                         victoryScreen.setCurrentLevel(currentLevel.getLevelNumber()); // Add this line
                     }
 
-                    if (currentLevel.haslost()) {
+                    if (currentLevel.hasLost()) {
                         currentState = GameState.LOSE;
                         looseScreen.setCurrentLevel(currentLevel.getLevelNumber()); // Add this line
                     }
