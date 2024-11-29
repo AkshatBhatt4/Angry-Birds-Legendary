@@ -346,9 +346,32 @@ public class Level3 extends Level {
         }
         bodiesToRemove.clear();
 
+        if (characters.isEmpty() && endScreenTimer == -1) {
+            endScreenTimer = 0; // Start the timer
+        }
+
+        if (endScreenTimer >= 0) {
+            endScreenTimer += Gdx.graphics.getDeltaTime();
+            if (endScreenTimer >= END_SCREEN_DELAY) {
+                hasWon =true;
+                endScreenTimer = -1; // Reset the timer
+            }
+        }
+
         // Draw available birds
         for (BlackBird bird : availableBirds) {
             bird.render(batch);
+        }
+        if (activeBird == null && endScreenTimer == -1) {
+            endScreenTimer = 0; // Start the timer
+        }
+
+        if (endScreenTimer >= 0) {
+            endScreenTimer += Gdx.graphics.getDeltaTime();
+            if (endScreenTimer >= END_SCREEN_DELAY) {
+                hasLost =true;
+                endScreenTimer = -1; // Reset the timer
+            }
         }
     }
 }
