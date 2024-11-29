@@ -15,8 +15,6 @@ public class Level1 extends Level {
     private RedBird activeBird;
     private Array<RedBird> availableBirds;
     private Array<Body> bodiesToRemove = new Array<>();
-    private float endScreenTimer = -1; 
-    private final float END_SCREEN_DELAY = 4.0f; // 4 seconds delay
 
     private World physicsWorld;
 
@@ -153,11 +151,11 @@ public class Level1 extends Level {
         if (endScreenTimer >= 0) {
             endScreenTimer += Gdx.graphics.getDeltaTime();
             if (endScreenTimer >= END_SCREEN_DELAY) {
-                haslost =true;
+                hasLost =true;
                 endScreenTimer = -1; // Reset the timer
             }
         }
-        //if(activeBird==null) haslost=true;
+        //if(activeBird==null) hasLost=true;
     }
 
     @Override
