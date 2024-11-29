@@ -32,6 +32,8 @@ public abstract class Level {
     protected boolean hasLost;
     public int ground=65;
     public float tower1X = 550;
+    protected float endScreenTimer = -1;
+    protected final float END_SCREEN_DELAY = 4.0f;
 
     public Level(OrthographicCamera camera, String backgroundPath , int levelNumber) {
         this.camera = camera;
